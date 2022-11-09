@@ -12,8 +12,6 @@ export default function useAuth() {
         await axiosClient
             .post("/login", data)
             .then((response) => {
-                console.log(response);
-
                 if (response.response) {
                     if (response.response.status === 400) {
                         for (const [key, value] of Object.entries(

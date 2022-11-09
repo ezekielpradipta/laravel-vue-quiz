@@ -2,9 +2,17 @@
   <nav class="text-sm font-semibold mb-6" aria-label="Breadcrumb">
     <ol class="list-none p-0 inline-flex">
       <li class="flex items-center">
-        <router-link :to="{ name: 'Dashboard' }"
-          ><p class="text-indigo-500">Home</p></router-link
-        >
+        <div v-if="getRole() === 'user'">
+          <router-link :to="{ name: 'User' }"
+            ><p class="text-indigo-500">Home</p></router-link
+          >
+        </div>
+        <div v-else>
+          <router-link :to="{ name: 'Admin' }"
+            ><p class="text-indigo-500">Home</p></router-link
+          >
+        </div>
+
         <svg
           class="fill-current w-3 h-3 mx-3"
           xmlns="http://www.w3.org/2000/svg"
@@ -23,6 +31,13 @@
   </nav>
 </template>
 <script setup>
+import jwt_decode from "jwt-decode";
+const getToken = localStorage.getItem("token");
+function getRole() {
+  const token = jwt_decode(getToken);
+  const userRole = token.user.roles[0].name;
+  return userRole;
+}
 const props = defineProps({
   title: String,
 });

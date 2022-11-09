@@ -1,5 +1,5 @@
 <template>
-  <bread-crumb title="Admin"></bread-crumb>
+  <bread-crumb title="User"></bread-crumb>
 </template>
 
 <script setup>

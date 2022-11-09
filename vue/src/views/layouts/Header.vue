@@ -6,6 +6,7 @@ import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { createToaster } from "@meforma/vue-toaster";
+import useAuth from "../../composables/Auth";
 const toaster = createToaster({
   position: "top-right",
 });
@@ -27,14 +28,10 @@ const sideBarToggle = () => {
     );
   }
 };
-function logout() {
-  store.dispatch("logout").then(() => {
-    router.push({
-      name: "Login",
-    });
-    toaster.success("Berhasil LogOut");
-  });
-}
+const { logout } = useAuth();
+const logoutButton = async () => {
+  logout();
+};
 </script>
 
 <template>
@@ -419,7 +416,7 @@ function logout() {
             </MenuItem>
             <MenuItem v-slot="{ active }">
               <button
-                @click="logout"
+                @click="logoutButton"
                 :class="[
                   active ? 'bg-purple-500 text-white' : 'text-gray-900',
                   'group flex  items-center w-full px-4 py-2 text-sm',

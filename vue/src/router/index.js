@@ -28,7 +28,7 @@ const routes = [
             {
                 path: "/user",
                 name: "User",
-                component: () => import("../views/User.vue"),
+                component: () => import("../views/pages/User.vue"),
                 meta: {
                     isUser: true,
                 },
@@ -36,7 +36,7 @@ const routes = [
             {
                 path: "/admin",
                 name: "Admin",
-                component: () => import("../views/Admin.vue"),
+                component: () => import("../views/pages/Admin.vue"),
                 meta: {
                     isAdmin: true,
                 },
