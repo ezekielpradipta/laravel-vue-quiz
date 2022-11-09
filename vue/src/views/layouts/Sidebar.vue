@@ -42,9 +42,9 @@ function getRole() {
         namamenu: "dashboardA",
       },
       {
-        name: "AdminPage1",
-        to: { name: "AdminPage" },
-        icon: HomeIcon,
+        name: "Generate Quiz",
+        to: { name: "GenerateQuiz" },
+        icon: BookOpenIcon,
         namamenu: "adminpage1",
       },
     ];

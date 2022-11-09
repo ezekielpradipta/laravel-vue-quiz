@@ -28,7 +28,7 @@ const routes = [
             {
                 path: "/user",
                 name: "User",
-                component: () => import("../views/pages/User.vue"),
+                component: () => import("../views/pages/users/User.vue"),
                 meta: {
                     isUser: true,
                 },
@@ -36,7 +36,7 @@ const routes = [
             {
                 path: "/admin",
                 name: "Admin",
-                component: () => import("../views/pages/Admin.vue"),
+                component: () => import("../views/pages/admin/Admin.vue"),
                 meta: {
                     isAdmin: true,
                 },
@@ -50,9 +50,9 @@ const routes = [
                 },
             },
             {
-                path: "/adminpage1",
-                name: "AdminPage",
-                component: () => import("../views/AdminPage1.vue"),
+                path: "/generateQuiz",
+                name: "GenerateQuiz",
+                component: () => import("../views/pages/admin/GenerateQuiz.vue"),
                 meta: {
                     isAdmin: true,
                 },
