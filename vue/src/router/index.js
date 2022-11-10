@@ -23,6 +23,7 @@ const routes = [
     {
         path: "/",
         meta: { requiresAuth: true },
+        redirect: "/user",
         component: () => import("../views/layouts/Index.vue"),
         children: [
             {
@@ -50,9 +51,18 @@ const routes = [
                 },
             },
             {
-                path: "/generateQuiz",
+                path: "/admin/generateQuiz",
                 name: "GenerateQuiz",
-                component: () => import("../views/pages/admin/GenerateQuiz.vue"),
+                component: () =>
+                    import("../views/pages/admin/GenerateQuiz.vue"),
+                meta: {
+                    isAdmin: true,
+                },
+            },
+            {
+                path: "/admin/users",
+                name: "ListUsers",
+                component: () => import("../views/pages/admin/AdminUser.vue"),
                 meta: {
                     isAdmin: true,
                 },

@@ -23,6 +23,7 @@ axiosClient.interceptors.response.use(
         return response;
     },
     function (error) {
+        console.log(error);
         const err_status = error.response.status;
         const err_message = error.response.data.message;
         if (err_status === 401) {

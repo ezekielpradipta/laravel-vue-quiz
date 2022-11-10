@@ -13,6 +13,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/vue/24/outline";
 import jwt_decode from "jwt-decode";
+import { UsersIcon } from "@heroicons/vue/20/solid";
 const getToken = localStorage.getItem("token");
 function getRole() {
   const token = jwt_decode(getToken);
@@ -40,6 +41,12 @@ function getRole() {
         to: { name: "Admin" },
         icon: HomeIcon,
         namamenu: "dashboardA",
+      },
+      {
+        name: "User",
+        to: { name: "ListUsers" },
+        icon: UsersIcon,
+        namamenu: "adminpage2",
       },
       {
         name: "Generate Quiz",

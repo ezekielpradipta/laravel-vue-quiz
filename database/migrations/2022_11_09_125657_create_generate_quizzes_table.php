@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('code');
             $table->string('status');
+            $table->string('start_time');
             $table->timestamps();
         });
     }

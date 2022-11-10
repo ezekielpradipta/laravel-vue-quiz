@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\UserAdminController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\QuizQuestionController;
 use Illuminate\Http\Request;
@@ -22,4 +23,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/cobaaa',[QuizQuestionController::class,'cobaa']);
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
-Route::post('/logout',[AuthController::class,'logout'])->middleware('auth:api');
+
+Route::middleware('auth:api')->group(function(){
+    Route::post('/logout',[AuthController::class,'logout']);
+    Route::prefix('admin')->group(function(){
+        Route::get('/users',[UserAdminController::class,'index']);
+    });
+});
