@@ -21,14 +21,14 @@
           {{ label }}
         </th>
       </thead>
-      <tbody v-if="paginated().length == 0">
+      <tbody v-if="props.items.length == 0">
         <tr>
           Data Tidak Ditemukan
         </tr>
       </tbody>
       <tbody v-else class="mb-4">
         <tr
-          v-for="(p, index) in paginated()"
+          v-for="(p, index) in props.items"
           :key="index"
           class="
             bg-white

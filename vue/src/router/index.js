@@ -67,6 +67,14 @@ const routes = [
                     isAdmin: true,
                 },
             },
+            {
+                path: "/admin/users/create",
+                name: "AdminUserForm",
+                component: () => import("../views/forms/AdminUserForm.vue"),
+                meta: {
+                    isAdmin: true,
+                },
+            },
         ],
     },
 ];

@@ -15,6 +15,13 @@ class AuthController extends Controller
             'name'      => 'required',
             'email'     => 'required|email|unique:users',
             'password'  => 'required|min:8|confirmed'
+        ],[
+            'name.required' => 'Nama Tidak Boleh Kosong', 
+            'email.required' => 'Email Tidak Boleh Kosong', 
+            'email.email'=>"Format Email salah",
+            'password.required' => 'Password Tidak Boleh Kosong', 
+            'password.min' => 'Password Kurang dari 8 Digit', 
+            'password.confirmed' => 'Password Tidak Sama', 
         ]);
 
         if ($validator->fails()) {

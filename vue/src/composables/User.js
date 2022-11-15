@@ -10,19 +10,54 @@ export default function useUser() {
         duration: 3000,
     });
     const users = ref([]);
-    const getUsers = async (url = null, data) => {
-        url = url || "/admin/users";
-        console.log(url);
+    const getUsers = async (page, data) => {
+        let uri_get = "/admin/users?page=" + page;
+        let uri_post = "/admin/users/search?page=" + page;
+        console.log(uri_post);
+        console.log(data);
         try {
-            let response = await axiosClient.get(url);
-            users.value = response.data;
-            console.log(response);
+            if (data) {
+                let response = await axiosClient.post(uri_post, data);
+                users.value = response.data;
+            } else {
+                let response = await axiosClient.get(uri_get);
+                users.value = response.data;
+            }
         } catch (error) {
             console.log(error);
         }
     };
+    const cekEmail = async (data) => {
+        try {
+            let response = await axiosClient.post("/cek/email", data);
+            return response;
+        } catch (error) {}
+    };
+    const createUser = async (data) => {
+        try {
+            await axiosClient.post("/register", data).then((response) => {
+                console.log(response);
+                if (response.response) {
+                    if (response.response.status === 400) {
+                        for (const [key, value] of Object.entries(
+                            response.response.data
+                        )) {
+                            toaster.error(`${value}`);
+                        }
+                    }
+                } else {
+                    toaster.success("Pengguna Berhasil Ditambahkan");
+                    router.push({
+                        name: "ListUsers",
+                    });
+                }
+            });
+        } catch (error) {}
+    };
     return {
         users,
         getUsers,
+        cekEmail,
+        createUser,
     };
 }

@@ -1,95 +1,42 @@
 <template>
   <bread-crumb title="List User"></bread-crumb>
   <base-card>
-    <div class="lg:flex justify-between items-center mb-6">
-      <p class="font-semibold mb-2 lg:mb-0">Daftar Pengguna</p>
-    </div>
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead
-        class="
-          text-xs text-gray-700
-          uppercase
-          bg-gray-50
-          dark:bg-gray-700 dark:text-gray-400
-        "
-      >
-        <tr>
-          <th scope="col" class="px-6 py-3">Nama</th>
-          <th scope="col" class="px-6 py-3">Email</th>
-        </tr>
-      </thead>
-      <tbody class="mb-4">
-        <tr
-          v-for="(p, index) in data_table.data.data"
-          :key="index"
-          class="
-            bg-white
-            border-b
-            dark:bg-gray-800 dark:border-gray-700
-            hover:bg-gray-50
-            dark:hover:bg-gray-600
-          "
-        >
-          <th
-            scope="row"
-            class="
-              px-6
-              py-4
-              font-medium
-              text-gray-900
-              dark:text-white
-              whitespace-nowrap
-            "
+    <template v-slot:cardHeader>
+      <div class="card-header">
+        <div class="card-title py-3">Data User</div>
+      </div>
+    </template>
+    <div>
+      <router-link :to="{ name: 'AdminUserForm' }">
+        <base-btn rounded purple_outline icon class="text-sm mr-2 w-48 mb-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 mr-2 -ml-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
           >
-            {{ p.name }}
-          </th>
-          <td class="px-6 py-4">{{ p.email }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="flex justify-center mt-5">
-      <nav
-        class="
-          relative
-          z-0
-          inline-flex
-          justify-center
-          rounded-md
-          shadow-sm
-          -space-x-px
-        "
-        aria-label="Pagination"
-      >
-        <a
-          v-for="(link, i) of data_table.data.links"
-          :key="i"
-          :disabled="!link.url"
-          href="#"
-          @click="getForPage($event, link)"
-          aria-current="page"
-          class="
-            relative
-            inline-flex
-            items-center
-            px-4
-            py-2
-            border
-            text-sm
-            font-medium
-            whitespace-nowrap
-          "
-          :class="[
-            link.active
-              ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
-              : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
-            i === 0 ? 'rounded-l-md bg-gray-100 text-gray-700' : '',
-            i === data_table.data.links.length - 1 ? 'rounded-r-md' : '',
-          ]"
-          v-html="link.label"
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+          Tambah User</base-btn
         >
-        </a>
-      </nav>
+      </router-link>
     </div>
+
+    <div class="grid xl:grid-cols-4 gap-4 mb-4">
+      <search
+        placeholder="Search By Email"
+        v-model="filter.filter_email"
+        v-on:keyup="filter_nn"
+      >
+      </search>
+    </div>
+
     <base-table
       :headers="headers"
       :items="data_table_2.data"
@@ -99,18 +46,15 @@
       @pagechanged="onPageChange"
     ></base-table>
   </base-card>
-  <pre>{{ data_table_2.data.total }}</pre>
 </template>
 
 <script setup>
 import { onMounted, reactive, watch } from "vue";
 import useUser from "../../../composables/User";
 import BaseTable from "../../components/Base/BaseTable.vue";
+import Search from "../../components/Form/Search.vue";
 const { users, getUsers } = useUser();
 onMounted(getUsers);
-const data_table = reactive({
-  data: [],
-});
 const data_table_2 = reactive({
   data: [],
   page: 1,
@@ -118,28 +62,23 @@ const data_table_2 = reactive({
   totalPages: 0,
 });
 const filter = reactive({
-  coba: "AAAAAAAA",
+  filter_email: "",
 });
 const headers = [
   { key: "name", label: "Nama" },
   { key: "email", label: "Email" },
 ];
 watch(users, (data) => {
-  data_table.data = data;
   data_table_2.data = data.data;
-  data_table_2.totalPages = Math.floor(data.total / data_table_2.pageSize) + 1;
-  console.log(data.data);
+  data_table_2.totalPages = data.last_page;
 });
-function getForPage(ev, link) {
-  ev.preventDefault();
-  if (!link.url || link.active) {
-    return;
-  }
-  getUsers(link.url, { ...filter });
-}
 const onPageChange = async (page) => {
   data_table_2.page = page;
-  await getUsers();
+  await getUsers(data_table_2.page, { ...filter });
+};
+const filter_nn = async () => {
+  data_table_2.page = 1;
+  await getUsers(data_table_2.page, { ...filter });
 };
 </script>
 

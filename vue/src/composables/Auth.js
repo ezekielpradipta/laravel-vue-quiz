@@ -59,6 +59,9 @@ export default function useAuth() {
             toaster.success(coba.data.message);
         }
     };
+    const register = async (data) => {
+        let response = await axiosClient.post("/register", data);
+    };
     return {
         login,
         logout,
