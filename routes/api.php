@@ -31,5 +31,8 @@ Route::middleware('auth:api')->group(function(){
     Route::prefix('admin')->group(function(){
         Route::get('/users',[UserAdminController::class,'index']);
         Route::post('/users/search',[UserAdminController::class,'search']);
+        Route::post('/users/save',[UserAdminController::class,'save']);
+        Route::post("/users/edit/{id}",[UserAdminController::class,'detail']);
+        Route::post("/users/delete/{id}",[UserAdminController::class,'delete']);
     });
 });

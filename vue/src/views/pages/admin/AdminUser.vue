@@ -44,16 +44,17 @@
       :pageSize="data_table_2.pageSize"
       :total-pages="data_table_2.totalPages"
       @pagechanged="onPageChange"
+      @delete="deleteID"
     ></base-table>
   </base-card>
 </template>
 
 <script setup>
-import { onMounted, reactive, watch } from "vue";
+import { inject, onMounted, reactive, watch } from "vue";
 import useUser from "../../../composables/User";
 import BaseTable from "../../components/Base/BaseTable.vue";
 import Search from "../../components/Form/Search.vue";
-const { users, getUsers } = useUser();
+const { users, getUsers, deleteData } = useUser();
 onMounted(getUsers);
 const data_table_2 = reactive({
   data: [],
@@ -64,9 +65,15 @@ const data_table_2 = reactive({
 const filter = reactive({
   filter_email: "",
 });
+const swal = inject("$swal");
 const headers = [
   { key: "name", label: "Nama" },
   { key: "email", label: "Email" },
+  {
+    key: "id",
+    label: "Aksi",
+    route: "AdminUserView",
+  },
 ];
 watch(users, (data) => {
   data_table_2.data = data.data;
@@ -79,6 +86,23 @@ const onPageChange = async (page) => {
 const filter_nn = async () => {
   data_table_2.page = 1;
   await getUsers(data_table_2.page, { ...filter });
+};
+const deleteID = async (id) => {
+  await swal({
+    title: "Apakah Anda Yakin?",
+    text: "Data Tidak Bisa dikembalikan!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Ya!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      swal("Deleted!", "Data Berhasil Terhapus", "success");
+      deleteData(id);
+      getUsers(data_table_2.page, { ...filter });
+    }
+  });
 };
 </script>
 

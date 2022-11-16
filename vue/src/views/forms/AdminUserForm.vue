@@ -1,6 +1,7 @@
 <template>
   <bread-crumb title="Tambah Data User"></bread-crumb>
   <base-card>
+    <pre>{{ model }}</pre>
     <template v-slot:cardHeader>
       <div class="card-header">
         <div class="card-title py-3">Tambah Data User</div>
@@ -63,15 +64,19 @@ import FormStep from "../components/Form/FormStep.vue";
 import FormTitle from "../components/Form/FormTitle.vue";
 import FormText from "../components/Form/FormText.vue";
 import useUser from "../../composables/User";
-import { reactive, watch } from "vue";
+import { onMounted, reactive, watch } from "vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const model = reactive({
   email: "",
   name: "",
   validate: [],
   password: "",
   password_confirmation: "",
+  id: null,
 });
-const { cekEmail, createUser } = useUser();
+
+const { cekEmail, createUser, getUser, user } = useUser();
 watch(
   () => model.email,
   (newValue, oldValue) => {
@@ -94,6 +99,16 @@ const validateEmail = async (value) => {
 const onSubmit = async () => {
   await createUser({ ...model });
 };
+if (route.params.id) {
+  console.log(route.params.id);
+  getUser(route.params.id);
+  watch(user, (data) => {
+    if (data) {
+      Object.assign(model, data);
+      console.log(data);
+    }
+  });
+}
 </script>
 
 <style lang="scss" scoped>

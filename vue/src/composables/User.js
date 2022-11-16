@@ -10,6 +10,7 @@ export default function useUser() {
         duration: 3000,
     });
     const users = ref([]);
+    const user = ref([]);
     const getUsers = async (page, data) => {
         let uri_get = "/admin/users?page=" + page;
         let uri_post = "/admin/users/search?page=" + page;
@@ -27,6 +28,11 @@ export default function useUser() {
             console.log(error);
         }
     };
+    const getUser = async (id) => {
+        let response = await axiosClient.post(`/admin/users/edit/${id}`);
+        console.log(response);
+        user.value = response.data;
+    };
     const cekEmail = async (data) => {
         try {
             let response = await axiosClient.post("/cek/email", data);
@@ -35,29 +41,37 @@ export default function useUser() {
     };
     const createUser = async (data) => {
         try {
-            await axiosClient.post("/register", data).then((response) => {
-                console.log(response);
-                if (response.response) {
-                    if (response.response.status === 400) {
-                        for (const [key, value] of Object.entries(
-                            response.response.data
-                        )) {
-                            toaster.error(`${value}`);
+            await axiosClient
+                .post("/admin/users/save", data)
+                .then((response) => {
+                    console.log(response);
+                    if (response.response) {
+                        if (response.response.status === 400) {
+                            for (const [key, value] of Object.entries(
+                                response.response.data
+                            )) {
+                                toaster.error(`${value}`);
+                            }
                         }
+                    } else {
+                        toaster.success("Pengguna Berhasil Ditambahkan");
+                        router.push({
+                            name: "ListUsers",
+                        });
                     }
-                } else {
-                    toaster.success("Pengguna Berhasil Ditambahkan");
-                    router.push({
-                        name: "ListUsers",
-                    });
-                }
-            });
+                });
         } catch (error) {}
+    };
+    const deleteData = async (id) => {
+        await axiosClient.post(`/admin/users/delete/${id}`);
     };
     return {
         users,
         getUsers,
         cekEmail,
         createUser,
+        user,
+        getUser,
+        deleteData,
     };
 }

@@ -75,6 +75,14 @@ const routes = [
                     isAdmin: true,
                 },
             },
+            {
+                path: "/admin/users/edit/:id",
+                name: "AdminUserView",
+                component: () => import("../views/forms/AdminUserForm.vue"),
+                meta: {
+                    isAdmin: true,
+                },
+            },
         ],
     },
 ];

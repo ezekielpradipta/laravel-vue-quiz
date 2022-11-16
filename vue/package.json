@@ -19,6 +19,7 @@
     "vee-validate": "^4.7.3",
     "vue": "^3.2.25",
     "vue-router": "^4.0.13",
+    "vue-sweetalert2": "^5.0.5",
     "vue3-perfect-scrollbar": "^1.6.1",
     "vuex": "^4.0.2"
   },

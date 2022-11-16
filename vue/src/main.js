@@ -12,6 +12,9 @@ import BaseCard from "./views/components/Base/BaseCard.vue";
 import BaseBtn from "./views/components/Base/BaseBtn.vue";
 import BreadCrumb from "./views/components/BreadCrumb.vue";
 import PerfectScrollbar from "vue3-perfect-scrollbar";
+import "vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css";
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 createApp(App)
     .component("BaseCard", BaseCard)
     .component("BaseBtn", BaseBtn)
@@ -19,4 +22,5 @@ createApp(App)
     .use(router)
     .use(store)
     .use(PerfectScrollbar)
+    .use(VueSweetalert2)
     .mount("#app");
