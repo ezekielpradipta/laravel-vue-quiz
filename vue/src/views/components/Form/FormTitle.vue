@@ -1,8 +1,6 @@
 <template>
   <div>
-    <label
-      class="block uppercase tracking-wide text-gray-700 text-xs font-bold"
-    >
+    <label class="block text-sm font-bold text-gray-700">
       <slot></slot>
       {{ judul }}
     </label>

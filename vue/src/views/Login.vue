@@ -54,15 +54,18 @@
         <p class="mt-2 text-center text-sm text-gray-600">
           Or
           {{ " " }}
-          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"
-            >start your 14-day free trial</a
+          <router-link
+            :to="{ name: 'Register' }"
+            class="font-medium text-indigo-600 hover:text-indigo-500"
           >
+            register for free
+          </router-link>
         </p>
       </div>
       <form class="mt-8 space-y-6" @submit="loginButton">
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
-            <label for="email-address" class="sr-only">Username Feeder</label>
+            <label for="email-address" class="sr-only">Email</label>
             <input
               type="text"
               v-model="user.email"
@@ -85,11 +88,11 @@
                 focus:z-10
                 sm:text-sm
               "
-              placeholder="Username Feeder"
+              placeholder="Username"
             />
           </div>
           <div>
-            <label for="password" class="sr-only">Password Feeder</label>
+            <label for="password" class="sr-only">Password</label>
             <input
               type="password"
               v-model="user.password"
@@ -116,7 +119,15 @@
             />
           </div>
         </div>
-
+        <p class="mt-2 text-center text-sm text-gray-600">
+          {{ " " }}
+          <router-link
+            :to="{ name: 'ResetPassword' }"
+            class="font-medium text-indigo-600 hover:text-indigo-500"
+          >
+            Lupa Password?
+          </router-link>
+        </p>
         <div>
           <button
             type="submit"

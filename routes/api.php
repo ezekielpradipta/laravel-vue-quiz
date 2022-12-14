@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\Admin\UserAdminController;
-use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Admin\UserAdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\UtilityController;
 use Illuminate\Http\Request;
@@ -24,10 +24,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/cobaaa',[QuizQuestionController::class,'cobaa']);
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
+Route::post('/sentToken',[AuthController::class,'sentToken']);
+Route::post('/validateToken',[AuthController::class,'validateToken']);
+Route::post('/resetPassword',[AuthController::class,'resetPassword']);
+Route::post('/cek/email',[UtilityController::class,'cekEmail']);
 
 Route::middleware('auth:api')->group(function(){
     Route::post('/logout',[AuthController::class,'logout']);
-    Route::post('/cek/email',[UtilityController::class,'cekEmail']);
     Route::prefix('admin')->group(function(){
         Route::get('/users',[UserAdminController::class,'index']);
         Route::post('/users/search',[UserAdminController::class,'search']);

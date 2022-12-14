@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chenfengyuan/vue-countdown": "^2.1.0",
     "@headlessui/vue": "^1.7.3",
     "@heroicons/vue": "^2.0.12",
     "@jobinsjp/vue3-datatable": "^1.0.15",
@@ -17,7 +18,7 @@
     "flowbite": "^1.5.3",
     "jwt-decode": "^3.1.2",
     "vee-validate": "^4.7.3",
-    "vue": "^3.2.25",
+    "vue": "^3.2.45",
     "vue-router": "^4.0.13",
     "vue-sweetalert2": "^5.0.5",
     "vue3-perfect-scrollbar": "^1.6.1",

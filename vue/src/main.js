@@ -15,10 +15,13 @@ import PerfectScrollbar from "vue3-perfect-scrollbar";
 import "vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css";
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
+
+import VueCountdown from "@chenfengyuan/vue-countdown";
 createApp(App)
     .component("BaseCard", BaseCard)
     .component("BaseBtn", BaseBtn)
     .component("BreadCrumb", BreadCrumb)
+    .component(VueCountdown.name, VueCountdown)
     .use(router)
     .use(store)
     .use(PerfectScrollbar)

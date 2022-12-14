@@ -60,10 +60,33 @@ export default function useAuth() {
         }
     };
     const register = async (data) => {
-        let response = await axiosClient.post("/register", data);
+        let response = await axiosClient
+            .post("/register", data)
+            .then((response) => {
+                console.log(response);
+                if (response.response) {
+                    if (response.response.status === 400) {
+                        for (const [key, value] of Object.entries(
+                            response.response.data
+                        )) {
+                            toaster.error(`${value}`);
+                        }
+                    }
+                } else {
+                    toaster.success("Pengguna Berhasil Ditambahkan");
+                    login(data);
+                }
+            });
+    };
+    const sentToken = async (data) => {
+        await axiosClient.post("/sentToken", data).then((response) => {
+            console.log(response);
+        });
     };
     return {
         login,
         logout,
+        register,
+        sentToken,
     };
 }

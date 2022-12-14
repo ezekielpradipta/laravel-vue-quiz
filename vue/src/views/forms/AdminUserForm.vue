@@ -10,17 +10,41 @@
     <form-master @submit="onSubmit">
       <form-step>
         <div class="grid xl:grid-cols-2 xl:gap-6">
-          <div class="relative mb-6 w-full group">
-            <form-title judul="Email"> </form-title>
-            <form-text
-              id="email"
-              type="email"
-              v-model="model.email"
-              placeholder="email@email.com"
-            ></form-text>
-            <span class="text-danger" v-if="model.validate.email">{{
-              model.validate.email
-            }}</span>
+          <div v-if="model.isUpdate">
+            <div class="relative mb-6 w-full group">
+              <form-title judul="Email"></form-title>
+              <input
+                type="text"
+                v-model="model.email"
+                class="
+                  block
+                  py-2.5
+                  px-0
+                  w-full
+                  text-gray-700
+                  bg-transparent
+                  border-0 border-b border-indigo-500
+                  appearance-none
+                  focus:outline-none focus:ring-0 focus:border-indigo-600
+                  peer
+                "
+                disabled
+              />
+            </div>
+          </div>
+          <div v-else>
+            <div class="relative mb-6 w-full group">
+              <form-title judul="Email"> </form-title>
+              <form-text
+                id="email"
+                type="email"
+                v-model="model.email"
+                placeholder="email@email.com"
+              ></form-text>
+              <span class="text-danger" v-if="model.validate.email">{{
+                model.validate.email
+              }}</span>
+            </div>
           </div>
 
           <div class="relative mb-6 w-full group">
@@ -74,6 +98,7 @@ const model = reactive({
   password: "",
   password_confirmation: "",
   id: null,
+  isUpdate: false,
 });
 
 const { cekEmail, createUser, getUser, user } = useUser();
@@ -107,6 +132,7 @@ if (route.params.id) {
       Object.assign(model, data);
       console.log(data);
     }
+    model.isUpdate = true;
   });
 }
 </script>

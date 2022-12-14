@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -41,13 +41,14 @@ class UserAdminController extends Controller
     public function save(Request $request){
         $validator = Validator::make($request->all(), [
             'name'      => 'required',
-            'email'     => 'required|email|unique:users',
+            'email'     => 'required|email|unique:users|indisposable',
             'password'  => 'required|min:8|confirmed'
         ],[
             'name.required' => 'Nama Tidak Boleh Kosong', 
             'email.required' => 'Email Tidak Boleh Kosong', 
             'email.email'=>"Format Email salah",
             'email.unique'=>"Email Sudah Terdaftar",
+            'email.indisposable'=>"Email Fake",
             'password.required' => 'Password Tidak Boleh Kosong', 
             'password.min' => 'Password Kurang dari 8 Digit', 
             'password.confirmed' => 'Password Tidak Sama', 
