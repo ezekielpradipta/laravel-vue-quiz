@@ -3,45 +3,29 @@ import { createToaster } from "@meforma/vue-toaster";
 import jwt_decode from "jwt-decode";
 import router from "../router";
 import axios from "axios";
+import { ref } from "vue";
 export default function useAuth() {
     const toaster = createToaster({
         position: "top-right",
         duration: 3000,
     });
+    const validkah = ref([]);
     const login = async (data) => {
         await axiosClient
             .post("/login", data)
             .then((response) => {
-                if (response.response) {
-                    if (response.response.status === 400) {
-                        for (const [key, value] of Object.entries(
-                            response.response.data
-                        )) {
-                            toaster.error(`${value}`);
-                        }
-                    }
-                } else {
-                    if (response.data.success === false) {
-                        toaster.error(
-                            response.data.message +
-                                ", Periksa Kembali Email/Password"
-                        );
-                    } else {
-                        if (response.data.token) {
-                            localStorage.setItem("token", response.data.token);
-                            let token = jwt_decode(response.data.token);
-                            let userRole = token.user.roles[0].name;
-                            if (userRole === "user") {
-                                router.push({
-                                    name: "User",
-                                });
-                            } else if (userRole === "admin") {
-                                router.push({
-                                    name: "Admin",
-                                });
-                            }
-                            toaster.success(response.data.message);
-                        }
+                if (!response.response) {
+                    localStorage.setItem("token", response.data.token);
+                    let token = jwt_decode(response.data.token);
+                    let userRole = token.user.roles[0].name;
+                    if (userRole === "user") {
+                        router.push({
+                            name: "User",
+                        });
+                    } else if (userRole === "admin") {
+                        router.push({
+                            name: "Admin",
+                        });
                     }
                 }
             })
@@ -55,25 +39,13 @@ export default function useAuth() {
         router.push({
             name: "Login",
         });
-        if (coba.data) {
-            toaster.success(coba.data.message);
-        }
     };
     const register = async (data) => {
         let response = await axiosClient
             .post("/register", data)
             .then((response) => {
                 console.log(response);
-                if (response.response) {
-                    if (response.response.status === 400) {
-                        for (const [key, value] of Object.entries(
-                            response.response.data
-                        )) {
-                            toaster.error(`${value}`);
-                        }
-                    }
-                } else {
-                    toaster.success("Pengguna Berhasil Ditambahkan");
+                if (!response.response) {
                     login(data);
                 }
             });
@@ -83,10 +55,35 @@ export default function useAuth() {
             console.log(response);
         });
     };
+    const validateToken = async (data) => {
+        await axiosClient.post("/validateToken", data).then((response) => {
+            if (response.status === 202) {
+                let cobastring =
+                    "email+" + response.data.email + "+" + data.token;
+                let decode64 = btoa(cobastring);
+                let generateUrl = decode64 + "??new-password";
+                router.push({
+                    name: "NewPassword",
+                    params: { id: generateUrl },
+                });
+            }
+        });
+    };
+    const resetPassword = async (id) => {
+        let response = await axiosClient.post(`/resetPassword/${id}`);
+        console.log(response);
+    };
+    const newPassword = async (data, id) => {
+        let response = await axiosClient.post(`/newPassword/${id}`, data);
+        console.log(response);
+    };
     return {
         login,
         logout,
         register,
         sentToken,
+        validateToken,
+        resetPassword,
+        newPassword,
     };
 }

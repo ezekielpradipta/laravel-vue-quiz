@@ -155,7 +155,6 @@
               name="password_confirmation"
               type="password"
               autocomplete="current-password"
-              required=""
               v-model="user.password_confirmation"
               class="
                 appearance-none
@@ -251,7 +250,7 @@ watch(
 const validateEmail = async (value) => {
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
     await cekEmail({ ...user }).then((response) => {
-      if (response.data === "unique") {
+      if (response.data.message === "unique") {
         user.validate["email"] = "";
       } else {
         user.validate["email"] = "Email Sudah Terdaftar";

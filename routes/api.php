@@ -26,7 +26,8 @@ Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/sentToken',[AuthController::class,'sentToken']);
 Route::post('/validateToken',[AuthController::class,'validateToken']);
-Route::post('/resetPassword',[AuthController::class,'resetPassword']);
+Route::post('/resetPassword/{id}',[AuthController::class,'resetPassword']);
+Route::post('/newPassword/{id}',[AuthController::class,'newPassword']);
 Route::post('/cek/email',[UtilityController::class,'cekEmail']);
 
 Route::middleware('auth:api')->group(function(){

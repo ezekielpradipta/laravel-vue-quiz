@@ -15,9 +15,9 @@ class UtilityController extends Controller
         }
         $data = DB::table('users')->where("email", $cek)->count();
         if ($data > 0) {
-            echo "not_unique";
+            return response()->json(['message'=>'not_unique'],202);
         } else {
-            echo "unique";
+            return response()->json(['message'=>'unique'],202);
         }
     }
 }

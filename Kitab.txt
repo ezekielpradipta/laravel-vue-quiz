@@ -1,0 +1,4 @@
+10	Validasi Form Gagal
+11	User Tidak Ditemukan ( email / password ) salah
+12	token gagal dikirim, user dengan email X tidak ditemukan
+13	Token tidak sesuai
