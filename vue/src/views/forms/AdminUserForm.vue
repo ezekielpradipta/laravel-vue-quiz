@@ -1,7 +1,6 @@
 <template>
   <bread-crumb title="Tambah Data User"></bread-crumb>
   <base-card>
-    <pre>{{ model }}</pre>
     <template v-slot:cardHeader>
       <div class="card-header">
         <div class="card-title py-3">Tambah Data User</div>

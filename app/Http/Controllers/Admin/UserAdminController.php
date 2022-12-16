@@ -16,7 +16,7 @@ class UserAdminController extends Controller
         // $user = User::query()->join('role_user', 'users.id','=','role_user.user_id')->where('role_user.role_id',1)->orderBy('created_at','desc')->get();
         $user = DB::table('role_user')->join('users','users.id','=','role_user.user_id')->where('role_user.role_id',1)->orderBy('users.created_at','desc')->paginate(100);
         // $user = DB::table('role_user')->join('users','users.id','=','role_user.user_id')->where('role_user.role_id',1)->orderBy('users.created_at','desc')->paginate(5)->toArray();
-        return response()->json($user,200);
+        return response()->json($user,202);
         // return array_reverse($user);
     }
     public function search(Request $request){
@@ -25,7 +25,7 @@ class UserAdminController extends Controller
             $filter_email = $filter_email;
          }
         $user = DB::table('role_user')->join('users','users.id','=','role_user.user_id')->where('role_user.role_id',1)->whereRaw("email like '%$filter_email%'")->orderBy('users.created_at','desc')->paginate(100);
-        return response()->json($user,200);
+        return response()->json($user,202);
     }
     public function detail($id)
     {
@@ -36,7 +36,7 @@ class UserAdminController extends Controller
             $data['email']=$user->email;
             $data['id']=$user->id;
         }
-        return response()->json($data,200);
+        return response()->json($data,202);
     }
     public function save(Request $request){
         $validator = Validator::make($request->all(), [
@@ -73,6 +73,6 @@ class UserAdminController extends Controller
     public function delete($id){
         $user = User::find($id);
         $user->delete();
-        return response('', 204);
+        return response('', 202);
     }
 }
