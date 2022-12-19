@@ -3,9 +3,20 @@
 
   <ParentTransition appear :visibility="true">
     <div class="space-y-6">
-      <BaseInput type="text" name="email" label="Email" autofocus />
+      <BaseInput
+        type="text"
+        v-model="user.email"
+        name="email"
+        label="Email"
+        autofocus
+      />
 
-      <BaseInput type="password" name="password" label="Password" />
+      <BaseInput
+        type="password"
+        v-model="user.password"
+        name="password"
+        label="Password"
+      />
 
       <div class="flex items-center justify-between">
         <BaseLink to="Password">Forgot Password?</BaseLink>
@@ -23,6 +34,15 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-
+import useAuth from "../composables/Auth";
+const { login } = useAuth();
 const router = useRouter();
+const user = {
+  email: "",
+  password: "",
+};
+const loginButton = async (ev) => {
+  ev.preventDefault();
+  login({ ...user });
+};
 </script>

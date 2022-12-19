@@ -1,10 +1,10 @@
 <template>
   <label
-    :for="Title"
     class="block text-sm dark:text-gray-400 font-medium text-label truncate"
   >
     <div class="flex justify-between">
       <slot></slot>
+      {{ Title }}
     </div>
   </label>
 </template>
