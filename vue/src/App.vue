@@ -4,7 +4,9 @@
 </script>
 
 <template>
-  <router-view :key="$route.path"></router-view>
+  <div class="white">
+    <router-view :key="$route.path"></router-view>
+  </div>
 </template>
 
 <style>
